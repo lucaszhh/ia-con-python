@@ -10,12 +10,14 @@ def saludo_cordial(n):
 saludo_cordial(5)
 
 """ Selección numero mayor en una lista """
+
 def maximo_en_lista():
-    lista = [1,3,5,7,11,13]
+    lista = [1, 3, 5, 7, 11, 13]
     maximo = lista[0]
     for numero in lista:
-       if lista[numero - 1] > maximo:
-          maximo = lista[numero -1]
-    print("El numero mas grande de la lista es: "+ str(maximo))
+        if numero > maximo:
+            maximo = numero
+    print("El número más grande de la lista es: " + str(maximo))
 
 maximo_en_lista()
+
