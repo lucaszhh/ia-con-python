@@ -40,20 +40,20 @@ print(mi_first_queue.quitar_nodo())
 print(mi_first_queue.quitar_nodo())
 print("contiene estado",mi_first_queue.contiene_estado(nodo_1))
 print("esta_vacia",mi_first_queue.esta_vacia())
- """
+"""
 
 print("******************************************************")
 print("******************************************************")
 """ LABERINTO """
-Laberinto1 = Laberinto("sr")
-Nodo1 = Nodo((1,37),(1,36),None)
+Laberinto1 = Laberinto("BFS")
 
-print(Laberinto1.paredes, "paredes")
+""" print(Laberinto1.paredes, "paredes")
 print(Laberinto1.camino, "camino")
 print(Laberinto1.algoritmo, "algoritmo")
 print(Laberinto1.alto, "alto")
 print(Laberinto1.ancho, "ancho")
 print(Laberinto1.inicio, "inicio")
 print(Laberinto1.meta, "meta")
-print(Laberinto1.solucion, "solucion")
-print(Laberinto1.expandir_nodo(Nodo1), "expandir nodo")
+print(Laberinto1.solucion, "solucion") """
+
+Laberinto1.resolver()

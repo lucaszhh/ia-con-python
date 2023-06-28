@@ -4,8 +4,8 @@ class Nodo():
         self.estado=_estado   #Entendemos por estado (fila,columna)
         self.padre=_padre     
         self.accion=_accion   #Accion es simplemente un texto
-                              #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
-                              #No es fundamental para el funcionamiento
+                            #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
+                            #No es fundamental para el funcionamiento
     def __str__(self):
         return(f"\n Nodo:\n Estado:{self.estado}\n Padre: {self.padre} \n Accion:{self.accion}")
     
@@ -33,10 +33,10 @@ class FronteraQueue(FronteraStack):
 class Laberinto():
     def  __init__(self,_algoritmo):
         '''Dentro del init podemos ejecutar funciones
-           para ir definiendo los atributos de la clase.
-           Les dejo lista la parte de leer el laberinto
-           del archivo de texto, y la detección del inicio,
-           meta y paredes.
+        para ir definiendo los atributos de la clase.
+        Les dejo lista la parte de leer el laberinto
+        del archivo de texto, y la detección del inicio,
+        meta y paredes.
         '''
         with open('./mazes/maze.txt','r') as archivo:
             contenido=archivo.read()     #Con red() leemos todo el archivo y lo guardamos en contenido
@@ -108,23 +108,40 @@ class Laberinto():
         return nodos_candidatos
 
     def resolver(self):
-        '''
-        Acá tienen que implementar el algoritmo de busqueda
-        La idea es intentar replicar el pseudocodigo que vimos en clase
-        1- Inicializar la frontera con el nodo inicial
-        2- Inicializar el conjunto de explorados como vacio
-        3- Repetimos:
-            3.1- Si la frontera esta vacia, no hay solucion
-            3.2- Quitamos un nodo de la frontera
-            3.3- Si el nodo contiene un estado que es meta, devolver la solucion
-            3.4- Agregar el nodo a explorados
-            3.5- Expandir el nodo, agregando los nodos hijos a la frontera
-        '''
-        if self.algoritmo=='BFS':
-            #Crear la frontera que corresponda
-            pass
-        elif self.algoritmo=='DFS':
-            #Crear la frontera que corresponda
-            pass
-        #------------------------------------------------------------------------
-        pass
+            '''
+            Acá tienen que implementar el algoritmo de busqueda
+            La idea es intentar replicar el pseudocodigo que vimos en clase
+            1- Inicializar la frontera con el nodo inicial
+            2- Inicializar el conjunto de explorados como vacio
+            3- Repetimos:
+                3.1- Si la frontera esta vacia, no hay solucion
+                3.2- Quitamos un nodo de la frontera
+                3.3- Si el nodo contiene un estado que es meta, devolver la solucion
+                3.4- Agregar el nodo a explorados
+                3.5- Expandir el nodo, agregando los nodos hijos a la frontera
+            '''
+            if self.algoritmo=='BFS':
+                #Crear la frontera que corresponda
+                frontera = FronteraQueue()
+            elif self.algoritmo=='DFS':
+                #Crear la frontera que corresponda
+                frontera = FronteraStack()
+            #------------------------------------------------------------------------
+            nodo_inicial = Nodo(self.inicio,None,None)
+            frontera.agregar_nodo(nodo_inicial)
+            print(frontera.esta_vacia())
+            self.explorados = set()
+            while True:
+                if frontera.esta_vacia:
+                    print("No hay solucion")
+                    return
+                nodo_actual = frontera.quitar_nodo()
+                if nodo_actual.estado == self.meta:
+                    print("Estamos en la meta")
+                self.explorados.add(nodo_actual.estado)
+                vecinos = self.expandir_nodo(nodo_actual)
+                for vecino in vecinos:
+                    if not vecino.estado in self.explorados: 
+                        frontera.agregar_nodo(Nodo(vecino.estado,nodo_actual,None))
+                
+
