@@ -68,6 +68,7 @@ class Laberinto():
         #De este modo ya tenemos identificadas las paredes, el inicio y la meta
         self.solucion=None
         self.algoritmo=_algoritmo #String en el que pasamos el nombre del algoritmo a utilizar
+        self.nodos_recorridos = set()
 
     def es_camino(self,_estado):
         i, j = _estado
@@ -91,7 +92,7 @@ class Laberinto():
         i, j = _nodo.estado
 
         arriba = ((i-1,j) , self.es_camino((i-1,j))) 
-        derecha = ((i-1,j) ,self.es_camino((i,j +1)))
+        derecha = ((i,j +1) ,self.es_camino((i,j +1)))
         abajo = ((i,j - 1 ), self.es_camino((i,j - 1 )))
         izquierda =  ((i + 1, j), self.es_camino((i + 1, j)))
 
@@ -108,18 +109,6 @@ class Laberinto():
         return nodos_candidatos
 
     def resolver(self):
-            '''
-            Acá tienen que implementar el algoritmo de busqueda
-            La idea es intentar replicar el pseudocodigo que vimos en clase
-            1- Inicializar la frontera con el nodo inicial
-            2- Inicializar el conjunto de explorados como vacio
-            3- Repetimos:
-                3.1- Si la frontera esta vacia, no hay solucion
-                3.2- Quitamos un nodo de la frontera
-                3.3- Si el nodo contiene un estado que es meta, devolver la solucion
-                3.4- Agregar el nodo a explorados
-                3.5- Expandir el nodo, agregando los nodos hijos a la frontera
-            '''
             if self.algoritmo=='BFS':
                 #Crear la frontera que corresponda
                 frontera = FronteraQueue()
@@ -129,19 +118,22 @@ class Laberinto():
             #------------------------------------------------------------------------
             nodo_inicial = Nodo(self.inicio,None,None)
             frontera.agregar_nodo(nodo_inicial)
-            print(frontera.esta_vacia())
             self.explorados = set()
             while True:
-                if frontera.esta_vacia:
+                if frontera.esta_vacia():
                     print("No hay solucion")
                     return
                 nodo_actual = frontera.quitar_nodo()
+                self.nodos_recorridos.add(nodo_actual.estado)
                 if nodo_actual.estado == self.meta:
+                    print(self.meta, "meta")
                     print("Estamos en la meta")
+                    return
                 self.explorados.add(nodo_actual.estado)
                 vecinos = self.expandir_nodo(nodo_actual)
                 for vecino in vecinos:
-                    if not vecino.estado in self.explorados: 
-                        frontera.agregar_nodo(Nodo(vecino.estado,nodo_actual,None))
+                    if not vecino in self.explorados: 
+                        frontera.agregar_nodo(Nodo(vecino,nodo_actual,None))
+                
                 
 

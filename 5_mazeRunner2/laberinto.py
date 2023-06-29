@@ -45,15 +45,21 @@ print("esta_vacia",mi_first_queue.esta_vacia())
 print("******************************************************")
 print("******************************************************")
 """ LABERINTO """
-Laberinto1 = Laberinto("BFS")
+Laberinto1 = Laberinto("DFS")
 
-""" print(Laberinto1.paredes, "paredes")
-print(Laberinto1.camino, "camino")
-print(Laberinto1.algoritmo, "algoritmo")
-print(Laberinto1.alto, "alto")
-print(Laberinto1.ancho, "ancho")
+
 print(Laberinto1.inicio, "inicio")
-print(Laberinto1.meta, "meta")
-print(Laberinto1.solucion, "solucion") """
-
 Laberinto1.resolver()
+print(len(Laberinto1.nodos_recorridos), "nodos_recorridos")
+""" print(Laberinto1.nodos_recorridos, "nodos_recorridos") """
+
+""" print(Laberinto1.camino,"camino") """
+
+concatenado = []
+
+for array in Laberinto1.camino:
+    concatenado.extend(array)
+
+""" print(concatenado) """
+
+print(len(concatenado), "nodos camino")
