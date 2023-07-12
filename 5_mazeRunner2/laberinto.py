@@ -63,3 +63,4 @@ for array in Laberinto1.camino:
 """ print(concatenado) """
 
 print(len(concatenado), "nodos camino")
+print("dibujar camino", Laberinto1.dibujar_solucion())

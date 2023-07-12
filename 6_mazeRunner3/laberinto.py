@@ -49,6 +49,7 @@ Laberinto1 = Laberinto("DFS")
 
 
 print(Laberinto1.inicio, "inicio")
+print(Laberinto1.meta, "meta")
 Laberinto1.resolver()
 
 caminoSolucionIda = [ ]
@@ -74,4 +75,8 @@ for array in Laberinto1.camino:
 
 print(len(concatenado), "nodos camino")
 
-Laberinto1.dibujar_solucion()
+Laberinto1.dibujar_solucion3()
+
+
+""" print(Laberinto1.comparar()) """
+

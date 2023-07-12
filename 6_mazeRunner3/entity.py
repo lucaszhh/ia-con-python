@@ -43,25 +43,25 @@ class Laberinto():
         
         self.contenido=contenido.splitlines() #Con splitlines() separamos el contenido en lineas, eliminando el \n
         
-        self.ancho=len(contenido[0])    #El ancho del laberinto es la cantidad 
+        self.ancho=len(self.contenido[0])    #El ancho del laberinto es la cantidad 
                                         #de caracteres de la primer linea 
                                         #(O de cualquiera suponiendo que todas tienen el mismo ancho)
-        self.alto=len(contenido)        #El alto del laberinto es la cantidad de lineas
+        self.alto=len(self.contenido)        #El alto del laberinto es la cantidad de lineas
         self.paredes=[]
-        self.camino=[]                 #Lista de paredes
+        self.camino=[]                  #Lista de paredes
 
         for fila in range(self.alto):   #Recorremos todas las filas
             fila_paredes=[]
             fila_camino=[]             #Creamos una lista vacia para las paredes de la fila actual
                                         #para cada fila se vuelve a limpiar la lista
             for columna in range(self.ancho): #Recorremos todas las columnas
-                if contenido[fila][columna]=='#': #Si el caracter es # es una pared
+                if self.contenido[fila][columna]=='#': #Si el caracter es # es una pared
                     fila_paredes.append((fila,columna)) #Agregamos la pared a la lista de paredes de la fila actual
-                elif contenido[fila][columna]=='I':   #Si el caracter es I es el inicio
+                elif self.contenido[fila][columna]=='I':   #Si el caracter es I es el inicio
                     self.inicio=(fila,columna)         #Guardamos el inicio
-                elif contenido[fila][columna]=='M':   #Si el caracter es M es la meta
+                elif self.contenido[fila][columna]=='M':   #Si el caracter es M es la meta
                     self.meta=(fila,columna) 
-                elif contenido[fila][columna]==' ':
+                elif self.contenido[fila][columna]==' ':
                     fila_camino.append((fila,columna))          #Guardamos la meta
             self.paredes.append(fila_paredes)         #Agregamos la lista de paredes de la fila actual a la lista de paredes
             self.camino.append(fila_camino)         #Agregamos la lista de caminos de la fila actual a la lista de caminos
@@ -70,21 +70,7 @@ class Laberinto():
         self.algoritmo=_algoritmo #String en el que pasamos el nombre del algoritmo a utilizar
         self.nodos_recorridos = set()
 
-    def dibujar_solucion(self):
-        print(self.solucion, "selfsolucion")
-        caminoSolucionIda = [ ]
 
-        for padre in self.solucion:
-            caminoSolucionIda.append(padre.estado)
-
-        for i, fila in enumerate(self.contenido) :
-            for j, col in enumerate(fila):
-                for camino in caminoSolucionIda:
-                    if camino == self.contenido[i][j]:
-                        self.contenido[i][j] = "*"
-
-        print(caminoSolucionIda)
-        print(self.contenido)
 
 
     def es_camino(self,_estado):
@@ -155,7 +141,35 @@ class Laberinto():
                 vecinos = self.expandir_nodo(nodo_actual)
                 for vecino in vecinos:
                     if not vecino in self.explorados: 
-                        frontera.agregar_nodo(Nodo(vecino,nodo_actual,None))
-                
-                
+                        frontera.agregar_nodo(Nodo(vecino,nodo_actual,None))            
 
+    def dibujar_solucion(self):
+        new_solucion = []
+
+        for fila in range(self.alto):   #Recorremos todas las filas
+            filas=[]
+            for columna in range(self.ancho): #Recorremos todas las columnas
+                if self.contenido[fila][columna]=='#': #Si el caracter es # es una pared
+                    filas.append("#") #Agregamos la pared a la lista de paredes de la fila actual
+                elif self.contenido[fila][columna]=='I':   #Si el caracter es I es el inicio
+                    filas.append("I")         #Guardamos el inicio
+                elif self.contenido[fila][columna]=='M':   #Si el caracter es M es la meta
+                    filas.append("M")  
+                elif self.contenido[fila][columna]==' ':
+                    filas.append(" ")
+                for nodo in self.solucion:
+                    if nodo.estado == (fila,columna):
+                        print(nodo.estado, "nodo estado")
+                        print((fila,columna), "fila/columna")
+                        filas[columna]= "+"
+            new_solucion.append(filas)
+        for lineas in new_solucion:
+            print(lineas)
+
+    def comparar(self):
+        print(self.solucion[0])
+        print(self.solucion[0].estado)
+        return self.solucion[0].estado == (7,3)                
+
+
+       

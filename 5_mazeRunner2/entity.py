@@ -41,12 +41,12 @@ class Laberinto():
         with open('./mazes/maze.txt','r') as archivo:
             contenido=archivo.read()     #Con red() leemos todo el archivo y lo guardamos en contenido
         
-        contenido=contenido.splitlines() #Con splitlines() separamos el contenido en lineas, eliminando el \n
+        self.contenido=contenido.splitlines() #Con splitlines() separamos el contenido en lineas, eliminando el \n
         
-        self.ancho=len(contenido[0])    #El ancho del laberinto es la cantidad 
+        self.ancho=len(self.contenido[0])    #El ancho del laberinto es la cantidad 
                                         #de caracteres de la primer linea 
                                         #(O de cualquiera suponiendo que todas tienen el mismo ancho)
-        self.alto=len(contenido)        #El alto del laberinto es la cantidad de lineas
+        self.alto=len(self.contenido)        #El alto del laberinto es la cantidad de lineas
         self.paredes=[]
         self.camino=[]                 #Lista de paredes
 
@@ -55,20 +55,21 @@ class Laberinto():
             fila_camino=[]             #Creamos una lista vacia para las paredes de la fila actual
                                         #para cada fila se vuelve a limpiar la lista
             for columna in range(self.ancho): #Recorremos todas las columnas
-                if contenido[fila][columna]=='#': #Si el caracter es # es una pared
+                if self.contenido[fila][columna]=='#': #Si el caracter es # es una pared
                     fila_paredes.append((fila,columna)) #Agregamos la pared a la lista de paredes de la fila actual
-                elif contenido[fila][columna]=='I':   #Si el caracter es I es el inicio
+                elif self.contenido[fila][columna]=='I':   #Si el caracter es I es el inicio
                     self.inicio=(fila,columna)         #Guardamos el inicio
-                elif contenido[fila][columna]=='M':   #Si el caracter es M es la meta
+                elif self.contenido[fila][columna]=='M':   #Si el caracter es M es la meta
                     self.meta=(fila,columna) 
-                elif contenido[fila][columna]==' ':
+                elif self.contenido[fila][columna]==' ':
                     fila_camino.append((fila,columna))          #Guardamos la meta
             self.paredes.append(fila_paredes)         #Agregamos la lista de paredes de la fila actual a la lista de paredes
             self.camino.append(fila_camino)         #Agregamos la lista de caminos de la fila actual a la lista de caminos
         #De este modo ya tenemos identificadas las paredes, el inicio y la meta
-        self.solucion=None
+        self.solucion= set()
         self.algoritmo=_algoritmo #String en el que pasamos el nombre del algoritmo a utilizar
         self.nodos_recorridos = set()
+
 
     def es_camino(self,_estado):
         i, j = _estado
@@ -134,6 +135,22 @@ class Laberinto():
                 for vecino in vecinos:
                     if not vecino in self.explorados: 
                         frontera.agregar_nodo(Nodo(vecino,nodo_actual,None))
+    
+    def dibujar_solucion(self):
+        print(self.solucion, "selfsolucion")
+        caminoSolucionIda = [ ]
+
+        for padre in self.solucion:
+            caminoSolucionIda.append(padre.estado)
+
+        for i, fila in enumerate(self.contenido) :
+            for j, col in enumerate(fila):
+                for camino in caminoSolucionIda:
+                    if camino == self.contenido[i][j]:
+                        self.contenido[i][j] = "*"
+
+        print(caminoSolucionIda)
+        print(self.contenido)
                 
                 
 
