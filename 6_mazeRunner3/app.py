@@ -117,7 +117,7 @@ class Laberinto():
             print(filas, "filas")
         for nodo in self.solucion:
             time.sleep(0.2)
-            DIBUJAR_CUADRADO((nodo.estado[1] * 20)+20, (nodo.estado[0] + 1) * 20, VERDE1)
+            DIBUJAR_CUADRADO((nodo.estado[1] * 20) + 20, (nodo.estado[0] + 1) * 20, VERDE1)
             pygame.display.update()
 
     def expandir_nodo(self,_nodo):
@@ -176,6 +176,8 @@ class Laberinto():
 
                     frontera.agregar_nodo(nodo_hijo)
 
+                    print(costo, "costo")
+
 
 """ import laberintos """
 laberintoTxt = "./laberintos/laberinto.txt"
@@ -185,15 +187,13 @@ laberintoTxt3 = "./laberintos/laberinto3.txt"
 
 """ Posibles algoritmos BFS DFS GBFS A* """
 
-Laberinto("GBFS", laberintoTxt3).resolver()
+Laberinto("A*", laberintoTxt).resolver()
 
 
 """ Bucle que permite que la página no se cierre """
-while True:
+""" while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    pygame.display.update()
-
-               
+    pygame.display.update() """
