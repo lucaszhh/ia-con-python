@@ -45,5 +45,7 @@ knowledge1 = And(symbols["FrontA"], symbols["BackA"])
 """ knowledge1 = And(Symbol("FrontA"), Symbol("BackA")) """
 
 print(knowledge1.formula())
+print(model_check(knowledge1,symbols["BackA"]))
+
 
 
