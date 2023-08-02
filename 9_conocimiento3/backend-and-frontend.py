@@ -38,10 +38,20 @@ for persona in personas:
 print(symbols,"symbols")
 
 """ 
-Primer escenario:
-A dice: “Soy un FrontEnd y un BackEnd” 
+    Primer escenario:
+    A dice: “Soy un FrontEnd y un BackEnd” 
 """
-knowledge1 = And(symbols["FrontA"], symbols["BackA"])
+  
+
+knowledge1 = And(
+    Or(symbols["FrontA"], symbols["BackA"]),
+    Not(And(symbols["FrontA"], symbols["BackA"])), # No pueden ser front y back a la vez
+
+
+    Implication(symbols["FrontA"], And(symbols["FrontA"], symbols["BackA"])),
+    Implication(symbols["BackA"], Not(And(symbols["FrontA"], symbols["BackA"]))),
+)
+
 """ knowledge1 = And(Symbol("FrontA"), Symbol("BackA")) """
 
 print(knowledge1.formula())
