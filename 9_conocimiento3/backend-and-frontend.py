@@ -119,19 +119,19 @@ knowledge3.add(
 knowledge3.add(
     Implication(
         symbols["BackA"],
-        And(symbols["BackA"],symbols["BackB"])
+        Not(And(symbols["BackA"],symbols["BackB"]))
     ),
 )
 knowledge3.add(
     Implication(
-        symbols["BackA"],
-        Not(And(symbols["BackA"],symbols["BackB"]))
+        symbols["FrontB"],
+        symbols["BackA"]
     ),
 )
 knowledge3.add(
     Implication(
         symbols["BackB"],
-        Not(And(symbols["BackA"],symbols["BackB"]))
+        Not(symbols["FrontA"])
     ),
 )
 
@@ -148,23 +148,61 @@ for symbol in symbols_list:
     B dice: “A dijo ‘Soy un BackEnd’ ”
     B luego dice: “C es un BackEnd”
     C dice “A es un FrontEnd”
-
+"""
 
 # Rules
 knowledge4 = And(
+    # A
     Or(symbols["FrontA"], symbols["BackA"]), # Es front o es back
     Not(And(symbols["FrontA"], symbols["BackA"])), # No pueden ser front y back a la vez
+    
+    # B
+    Or(symbols["FrontB"], symbols["BackB"]), # Es front o es back
+    Not(And(symbols["FrontB"], symbols["BackB"])), # No pueden ser front y back a la vez
+    
+    # C
+    Or(symbols["FrontC"], symbols["BackC"]), # Es front o es back
+    Not(And(symbols["FrontC"], symbols["BackC"])), # No pueden ser front y back a la vez
 )
 
 # Conocimiento
+# B dice: “A dijo ‘Soy un BackEnd’ ”
 knowledge4.add(
     Implication(
-        symbols["BackA"]
+        symbols["FrontB"], And(Implication(symbols["FrontA"], symbols["FrontB"]), Implication(symbols["FrontB"], Not(symbols["FrontB"])))
+    )
+)
+knowledge4.add(
+    Implication(
+        symbols["BackB"], Not(And(Implication(symbols["FrontA"], symbols["FrontB"]), Implication(symbols["FrontB"], Not(symbols["FrontB"]))))
+    )
+)
+# B luego dice: “C es un BackEnd”
+knowledge4.add(
+    Implication(
+        symbols["FrontB"], symbols["BackC"]
+    )
+)
+knowledge4.add(
+    Implication(
+        symbols["BackB"], Not(symbols["BackC"])
+    )
+)
+# C dice “A es un FrontEnd”
+knowledge4.add(
+    Implication(
+        symbols["FrontC"], symbols["FrontA"]
+    )
+)
+knowledge4.add(
+    Implication(
+        symbols["BackC"], Not(symbols["FrontA"])
     )
 )
 
 # Logs
+print("knowledge4")
 for symbol in symbols_list:
     if model_check(knowledge4, symbol):
         print(f"{symbol}")
-"""
+
