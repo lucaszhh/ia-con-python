@@ -19,7 +19,7 @@ lluvia_cpd = TabularCPD(variable=lluvia, variable_card=3, values=[[0.7],[0.2],[0
 
 mantenimiento_list =  {"si": [0.4,0.2,0.1], "no": [0.6,0.8,0.9]}
 
-lluvia_cpd = TabularCPD(
+mantenimiento_cpd = TabularCPD(
     variable = mantenimiento,
     variable_card = len(mantenimiento_list.keys()),
     values=[mantenimiento_list[key] for key in mantenimiento_list.keys()],
@@ -48,7 +48,7 @@ tren_cpd = TabularCPD(
     }
 )
 
-print(tren_cpd)
+# print(tren_cpd)
 
 # Creacion de la tabla de probabilidad de reunion dado tren
 
@@ -66,13 +66,30 @@ reunion_cpd = TabularCPD(
     }
 )
 
-print(reunion_cpd)
+# print(reunion_cpd)
 
 
+# Añado las tablas a la red 
+red_bayes.add_cpds(lluvia_cpd, mantenimiento_cpd, tren_cpd, reunion_cpd)
 
+# Consultas a la red
+# Creacion de inferencia
 
+inferencia = VariableElimination(red_bayes)
 
+# Consultas
 
+consulta_1 = inferencia.query( variables=[lluvia], evidence={reunion: "asistir", tren:"a_tiempo"})
 
+# print(lluvia_cpd)
+# print(consulta_1)
 
+consulta_2 = inferencia.query( variables=[lluvia], evidence={mantenimiento: "no", tren:"demorado"})
 
+# print(lluvia_cpd)
+# print(consulta_2)
+
+consulta_3 = inferencia.query( variables=[mantenimiento, lluvia], evidence={reunion: "no_asistir"})
+
+# print(mantenimiento_cpd)
+# print(consulta_3)
