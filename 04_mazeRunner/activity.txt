@@ -1,0 +1,33 @@
+# ACTIVIDAD - SEMANA 2
+
+# Actividad 1 - Búsqueda no informada
+
+Crear una implementación de los algoritmos Depth-First Search y Breadth-First Search para resolver
+el siguiente laberinto:
+
+
+* *para representarlo pueden utilizar # para las paredes, i para el inicio, m para la meta*
+
+## Recomendaciones
+
+- En base al “pseudocódigo” visto en la teoría, implementar bloque a bloque cada requisito para 
+resolver un problema de búsqueda
+- Solo se pueden realizar movimientos en la dirección horizontal y vertical, no diagonales
+- Se recomienda utilizar orientación a objetos, donde una posible estructura del programa puede ser:
+    - Clase Nodo - repasar la teoría sobre qué cosas contiene un nodo
+    - Clase FronteraStack (Pila) - para implementar depth-first search
+    - Clase FronteraQueue (Cola) - para implementar breadth-first search
+    - Clase Laberinto - se debe encargar de procesar el laberinto, expandir los nodos, interactuar 
+    con la frontera, etc
+- Se recomienda utilizar una matriz para guardar el laberinto, de este modo podremos movernos por 
+los diferentes vecinos de un nodo. Nuestras filas serán i y las columnas j:
+
+
+## entidades y atributos
+
+Node : state, father, action, cost , buscarNodo(),
+
+Maze : initialState, currentState
+
+BorderSearch : verFrontera , moverIzquierda(), moverDerecha(), moverArriba(), moverAbajo, buscarMeta(), buscarInicio()
+
